@@ -1,0 +1,59 @@
+service: LanguageAppPrototype
+frameworkVersion: ">=1.46.0"
+
+# Specifies the cloud provider and runtime details for our serverless implementation
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-west-1
+  profile: LanguageAppAdmin
+
+plugins:
+  - serverless-appsync-plugin
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  chatsTableName: ${self:custom.stage}-language-app-chats
+  appSync:
+    name: LanguageAppPrototypeAppSync    
+    authenticationType: API_KEY
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: chatsSource
+        config:
+          tableName: ${self:custom.chatsTableName}
+    mappingTemplates:
+      - dataSource: chatsSource
+        type: Query
+        field: listMessages # from the query in schema.graphql
+        request: "list_messages/request.vtl"
+        response: "list_messages/response.vtl"
+      - dataSource: chatsSource
+        type: Mutation
+        field: putMessage # from the mutation in schema.graphql
+        request: "put_message/request.vtl"
+        response: "put_message/response.vtl"
+    substitutions:
+      chatsTableName: "${self:custom.chatsTableName}"
+
+# AWS CloudFormation configuration
+resources:
+  Resources:
+    chatTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.chatsTableName}
+        AttributeDefinitions:
+          - AttributeName: chatId
+            AttributeType: S
+          - AttributeName: sortKey
+            AttributeType: S
+        KeySchema:
+          - AttributeName: chatId
+            KeyType: HASH
+          - AttributeName: sortKey
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

@@ -1,0 +1,22 @@
+{
+  #set ($delimiter = "_")
+  #set($chatId = $util.autoId())
+  #set($messageId = $util.autoId())
+  #set($timestamp = $util.time.nowISO8601())
+
+  #set($messageSortKey = "message$delimiter$timestamp$delimiter$messageId")
+
+  "version" : "2018-05-29",
+  "operation" : "BatchPutItem",
+  "tables": {
+    "${chatsTableName}": [
+      {
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson($messageSortKey),
+        "messageId": $util.dynamodb.toStringJson($messageId),
+        "message": $util.dynamodb.toStringJson($ctx.args.input.message)
+      }
+    ]
+  }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "language-app-prototype",
+  "version": "0.0.1",
+  "description": "App to help learning languages",
+  "scripts": {
+    "offline": "./node_modules/.bin/serverless offline",
+    "deploy-dev": "./node_modules/.bin/serverless deploy -v --stage dev",
+    "undeploy-dev": "./node_modules/.bin/serverless remove -v --stage dev"
+  },
+  "author": "Joao Fernando Corsini",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk": "^2.488.0",
+    "serverless": "^1.46.1",
+    "serverless-appsync-plugin": "^1.1.2"
+  }
+}
