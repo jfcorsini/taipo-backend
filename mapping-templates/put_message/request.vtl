@@ -1,6 +1,7 @@
 {
   #set ($delimiter = "_")
-  #set($chatId = $util.autoId())
+  #set($chatId = $ctx.args.input.chatId)
+  #set($message = $ctx.args.input.message)
   #set($messageId = $util.autoId())
   #set($timestamp = $util.time.nowISO8601())
 
@@ -14,7 +15,7 @@
         "chatId": $util.dynamodb.toStringJson($chatId),
         "sortKey": $util.dynamodb.toStringJson($messageSortKey),
         "messageId": $util.dynamodb.toStringJson($messageId),
-        "message": $util.dynamodb.toStringJson($ctx.args.input.message)
+        "message": $util.dynamodb.toStringJson($message)
       }
     ]
   }

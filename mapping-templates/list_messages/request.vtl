@@ -1,4 +1,16 @@
 {
   "version" : "2017-02-28",
-  "operation" : "Scan",
+  "operation" : "Query",
+  "query" : {
+    "expression": "chatId = :chatId",
+      "expressionValues" : {
+        ":chatId" : { "S" : "$ctx.args.input.chatId" }
+      }
+  }
+  #if( ${ctx.args.input.count} )
+      ,"limit": ${ctx.args.input.count}
+  #end
+  #if( ${ctx.args.input.nextToken} )
+      ,"nextToken": "${ctx.args.input.nextToken}"
+  #end
 }

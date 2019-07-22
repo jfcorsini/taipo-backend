@@ -1,22 +1,39 @@
-type Message {
-  chatId: ID! # the primary partition key in DynamoDB
+type ChatItem {
+  chatId: ID!
   sortKey: String!
   message: String!
+  messageId: String
+}
+
+# Chat entry when sort key starts with 'message'
+type ChatMessage {
+  chatId: ID!
+  sortKey: String!
+  message: String!
+  messageId: String!
+}
+
+# Define the input to create a message
+input ListMessagesInput {
+  chatId: String!
+  count: Int
+  nextToken: String
 }
 
 # Define the queries
 type Query {
-  listMessages: [Message]
+  listMessages(input: ListMessagesInput): [ChatMessage]
 }
 
 # Define the input to create a message
 input PutMessageInput {
+  chatId: String!
   message: String!
 }
 
 # Define the mutations
 type Mutation {
-  putMessage(input: PutMessageInput): [Message]
+  putMessage(input: PutMessageInput): [ChatMessage]
 }
 
 # Define the schema
