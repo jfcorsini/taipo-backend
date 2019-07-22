@@ -36,8 +36,14 @@ type Mutation {
   putMessage(input: PutMessageInput): [ChatMessage]
 }
 
+type Subscription {
+  createdMessage(chatId: String): [ChatMessage]
+  @aws_subscribe(mutations: ["putMessage"])
+}
+
 # Define the schema
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }

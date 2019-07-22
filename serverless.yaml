@@ -34,6 +34,11 @@ custom:
         field: putMessage # from the mutation in schema.graphql
         request: "put_message/request.vtl"
         response: "put_message/response.vtl"
+      - dataSource: chatsSource
+        type: Subscription
+        field: createdMessage # from the subscription in schema.graphql
+        request: "get_last_message/request.vtl"
+        response: "get_last_message/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
 
