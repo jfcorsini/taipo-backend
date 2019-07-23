@@ -39,6 +39,16 @@ custom:
         field: createdMessage # from the subscription in schema.graphql
         request: "get_last_message/request.vtl"
         response: "get_last_message/response.vtl"
+      - dataSource: chatsSource
+        type: Mutation
+        field: createChat # from the mutation in schema.graphql
+        request: "create_chat/request.vtl"
+        response: "create_chat/response.vtl"
+      - dataSource: chatsSource
+        type: Query
+        field: listChats # from the query in schema.graphql
+        request: "list_chats/request.vtl"
+        response: "list_chats/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
 
@@ -62,3 +72,13 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+        - IndexName: invertedIndex # Currently without sort key because it's not needed
+          KeySchema:
+          - AttributeName: sortKey
+            KeyType: HASH
+          Projection:
+            ProjectionType: ALL #TODO: Use INCLUDE and set NonKeyAttributes
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1

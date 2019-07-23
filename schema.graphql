@@ -1,3 +1,4 @@
+# All items allowed on the dynamoDB
 type ChatItem {
   chatId: ID!
   sortKey: String!
@@ -13,9 +14,20 @@ type ChatMessage {
   messageId: String!
 }
 
-# Define the input to create a message
+# Chat entry when sort key equals 'settings'
+type ChatGroup {
+  chatId: ID!
+  sortKey: String!
+  chatName: String!
+}
+
 input ListMessagesInput {
   chatId: String!
+  count: Int
+  nextToken: String
+}
+
+input ListChatsInput {
   count: Int
   nextToken: String
 }
@@ -23,17 +35,22 @@ input ListMessagesInput {
 # Define the queries
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
+  listChats(input: ListChatsInput): [ChatGroup]
 }
 
-# Define the input to create a message
 input PutMessageInput {
   chatId: String!
   message: String!
 }
 
+input CreateChatInput {
+  chatName: String!
+}
+
 # Define the mutations
 type Mutation {
-  putMessage(input: PutMessageInput): [ChatMessage]
+  putMessage(input: PutMessageInput): [ChatMessage] # Array because it's using putBatch. Remove if won't be needed
+  createChat(input: CreateChatInput): ChatGroup
 }
 
 type Subscription {

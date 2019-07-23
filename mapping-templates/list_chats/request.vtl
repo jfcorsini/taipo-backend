@@ -2,12 +2,12 @@
   "version" : "2017-02-28",
   "operation" : "Query",
   "query" : {
-    "expression": "chatId = :chatId and begins_with(sortKey, :sortKey)",
-    "expressionValues" : {
-      ":chatId" : { "S" : "$ctx.args.input.chatId" },
-      ":sortKey" : { "S" : "message" }
-    }
-  }
+    "expression": "sortKey = :sortKey",
+      "expressionValues" : {
+        ":sortKey" : { "S" : "config" }
+      }
+  },
+  "index": "invertedIndex"
   #if( ${ctx.args.input.count} )
       ,"limit": ${ctx.args.input.count}
   #end
