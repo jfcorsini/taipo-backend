@@ -38,7 +38,7 @@ type Query {
   listChats(input: ListChatsInput): [ChatGroup]
 }
 
-input PutMessageInput {
+input CreateMessageInput {
   chatId: String!
   message: String!
 }
@@ -49,13 +49,13 @@ input CreateChatInput {
 
 # Define the mutations
 type Mutation {
-  putMessage(input: PutMessageInput): [ChatMessage] # Array because it's using putBatch. Remove if won't be needed
+  createMessage(input: CreateMessageInput): ChatMessage
   createChat(input: CreateChatInput): ChatGroup
 }
 
 type Subscription {
-  createdMessage(chatId: String): [ChatMessage]
-  @aws_subscribe(mutations: ["putMessage"])
+  createdMessage(chatId: String): ChatMessage
+  @aws_subscribe(mutations: ["createMessage"])
 }
 
 # Define the schema

@@ -1,0 +1,21 @@
+{
+  #set ($delimiter = "_")
+  #set($chatId = $ctx.args.input.chatId)
+  #set($message = $ctx.args.input.message)
+  #set($messageId = $util.autoId())
+  #set($timestamp = $util.time.nowISO8601())
+
+  #set($messageSortKey = "message$delimiter$timestamp$delimiter$messageId")
+
+  "version" : "2017-02-28",
+  "operation" : "PutItem",
+  "key": {
+    "chatId": $util.dynamodb.toStringJson($chatId),
+    "sortKey": $util.dynamodb.toStringJson($messageSortKey)
+  },
+  "attributeValues": {
+    "messageId": $util.dynamodb.toStringJson($messageId),
+    "message": $util.dynamodb.toStringJson($message),
+    "timestamp": $util.dynamodb.toStringJson($timestamp)
+  }
+}
