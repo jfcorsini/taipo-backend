@@ -17,7 +17,12 @@ custom:
   chatsTableName: ${self:custom.stage}-language-app-chats
   appSync:
     name: LanguageAppPrototypeAppSync    
-    authenticationType: API_KEY
+    authenticationType: AMAZON_COGNITO_USER_POOLS
+    userPoolConfig:
+      awsRegion: ${self:provider.region}
+      defaultAction: ALLOW
+      userPoolId: !Ref CognitoUserPool
+      # appIdClientRegex: ""
     dataSources:
       - type: AMAZON_DYNAMODB
         name: chatsSource
