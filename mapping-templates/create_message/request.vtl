@@ -2,6 +2,7 @@
   #set ($delimiter = "_")
   #set($chatId = $ctx.args.input.chatId)
   #set($message = $ctx.args.input.message)
+  #set($username = $ctx.args.input.username)
   #set($messageId = $util.autoId())
   #set($timestamp = $util.time.nowISO8601())
 
@@ -14,6 +15,7 @@
     "sortKey": $util.dynamodb.toStringJson($messageSortKey)
   },
   "attributeValues": {
+    "username": $util.dynamodb.toStringJson($username),
     "messageId": $util.dynamodb.toStringJson($messageId),
     "message": $util.dynamodb.toStringJson($message),
     "timestamp": $util.dynamodb.toStringJson($timestamp)

@@ -2,8 +2,10 @@
 type ChatItem {
   chatId: ID!
   sortKey: String!
-  message: String!
+  message: String
   messageId: String
+  username: String
+  chatName: String
 }
 
 # Chat entry when sort key starts with 'message'
@@ -12,6 +14,7 @@ type ChatMessage {
   sortKey: String!
   message: String!
   messageId: String!
+  username: String!
 }
 
 # Chat entry when sort key equals 'settings'
@@ -41,6 +44,7 @@ type Query {
 input CreateMessageInput {
   chatId: String!
   message: String!
+  username: String!
 }
 
 input CreateChatInput {
