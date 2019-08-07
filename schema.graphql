@@ -1,3 +1,7 @@
+####################################
+# Chat definitions
+####################################
+
 # All items allowed on the dynamoDB
 type ChatItem {
   chatId: ID!
@@ -17,7 +21,7 @@ type ChatMessage {
   username: String!
 }
 
-# Chat entry when sort key equals 'settings'
+# Chat entry when sort key equals 'config'
 type ChatGroup {
   chatId: ID!
   sortKey: String!
@@ -35,12 +39,6 @@ input ListChatsInput {
   nextToken: String
 }
 
-# Define the queries
-type Query {
-  listMessages(input: ListMessagesInput): [ChatMessage]
-  listChats(input: ListChatsInput): [ChatGroup]
-}
-
 input CreateMessageInput {
   chatId: String!
   message: String!
@@ -51,10 +49,46 @@ input CreateChatInput {
   chatName: String!
 }
 
+####################################
+# User definitions
+####################################
+
+# All items allowed on the dynamoDB
+type UserItem {
+  username: ID!
+  sortKey: String!
+  lastLogin: String
+  email: String
+}
+
+# User entry when sort key equals 'setting'
+type UserSetting {
+  username: ID!
+  sortKey: String!
+  lastLogin: String!
+  email: String!
+}
+
+input PutUserInput {
+  username: String!
+  email: String!
+}
+
+####################################
+# Query, Mutation and Subscription
+####################################
+
+# Define the queries
+type Query {
+  listMessages(input: ListMessagesInput): [ChatMessage]
+  listChats(input: ListChatsInput): [ChatGroup]
+}
+
 # Define the mutations
 type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
   createChat(input: CreateChatInput): ChatGroup
+  putUser(input: PutUserInput): UserSetting
 }
 
 type Subscription {

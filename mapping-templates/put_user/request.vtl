@@ -1,0 +1,16 @@
+{
+  #set($email = $ctx.args.input.email)
+  #set($username = $ctx.args.input.username)
+  #set($timestamp = $util.time.nowISO8601())
+
+  "version" : "2017-02-28",
+  "operation" : "PutItem",
+  "key": {
+    "username": $util.dynamodb.toStringJson($username),
+    "sortKey": $util.dynamodb.toStringJson("config"),
+  },
+  "attributeValues": {
+    "email": $util.dynamodb.toStringJson($email),
+    "lastLogin": $util.dynamodb.toStringJson($timestamp)
+  }
+}

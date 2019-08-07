@@ -15,6 +15,7 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   chatsTableName: ${self:custom.stage}-language-app-chats
+  usersTableName: ${self:custom.stage}-language-app-users
   appSync:
     name: LanguageAppPrototypeAppSync    
     authenticationType: AMAZON_COGNITO_USER_POOLS
@@ -28,6 +29,10 @@ custom:
         name: chatsSource
         config:
           tableName: ${self:custom.chatsTableName}
+      - type: AMAZON_DYNAMODB
+        name: usersSource
+        config:
+          tableName: ${self:custom.usersTableName}
       - type: NONE
         name: noneSource
     mappingTemplates:
@@ -56,8 +61,14 @@ custom:
         field: listChats # from the query in schema.graphql
         request: "list_chats/request.vtl"
         response: "list_chats/response.vtl"
+      - dataSource: usersSource
+        type: Mutation
+        field: putUser # from the mutation in schema.graphql
+        request: "put_user/request.vtl"
+        response: "put_user/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
+      usersTableName: "${self:custom.usersTableName}"
 
 # AWS CloudFormation configuration
 resources:
