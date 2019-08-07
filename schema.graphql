@@ -74,6 +74,12 @@ input PutUserInput {
   email: String!
 }
 
+input SearchUsersInput {
+  username: String
+  count: Int
+  nextToken: String
+}
+
 ####################################
 # Query, Mutation and Subscription
 ####################################
@@ -82,6 +88,7 @@ input PutUserInput {
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
   listChats(input: ListChatsInput): [ChatGroup]
+  searchUsers(input: SearchUsersInput): [UserSetting]
 }
 
 # Define the mutations

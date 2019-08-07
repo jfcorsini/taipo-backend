@@ -66,6 +66,11 @@ custom:
         field: putUser # from the mutation in schema.graphql
         request: "put_user/request.vtl"
         response: "put_user/response.vtl"
+      - dataSource: usersSource
+        type: Query
+        field: searchUsers # from the query in schema.graphql
+        request: "search_users/request.vtl"
+        response: "search_users/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
       usersTableName: "${self:custom.usersTableName}"

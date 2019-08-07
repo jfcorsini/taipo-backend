@@ -48,6 +48,8 @@ Resources:
         KeySchema:
         - AttributeName: sortKey
           KeyType: HASH
+        - AttributeName: username
+          KeyType: RANGE
         Projection:
           ProjectionType: ALL #TODO: Use INCLUDE and set NonKeyAttributes
         ProvisionedThroughput:

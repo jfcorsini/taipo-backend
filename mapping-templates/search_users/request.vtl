@@ -1,0 +1,26 @@
+{
+  #set($username = $ctx.args.input.username)
+
+  "version" : "2017-02-28",
+  "operation" : "Query",
+  "query" : {
+    #if( ${username} )
+    "expression": "sortKey = :sortKey and begins_with(username, :username)",
+    "expressionValues" : {
+      ":sortKey" : { "S" : "config" },
+      ":username" : { "S" : "$username" },
+    #else
+    "expression": "sortKey = :sortKey",
+    "expressionValues" : {
+      ":sortKey" : { "S" : "config" }
+    #end
+    }
+  },
+  "index": "invertedIndex"
+  #if( ${ctx.args.input.count} )
+      ,"limit": ${ctx.args.input.count}
+  #end
+  #if( ${ctx.args.input.nextToken} )
+      ,"nextToken": "${ctx.args.input.nextToken}"
+  #end
+}
