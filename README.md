@@ -1,16 +1,17 @@
-# nameless-language-app
+# Taipo 
 
-This is the repository where I will add code related to a message-based app to help learning a language. This is still in early stage of development.
+Taipo is a chat application that aims to help people to learn a new language. For more details on my motivation to build this, check my [blog post](https://jfcorsini.com/blog/chat-app-pt-1/).
 
-To this particular moment, this will be the codebase for the backend.
+This repository will keep track of the backend development. To see how I am building the whole application, please check the following repositories:
+  * 👾 Backend repository: [jfcorsini/taipo-frontend](https://github.com/jfcorsini/taipo-backend)
+  * 🎨 Frontend repository: [jfcorsini/taipo-frontend](https://github.com/jfcorsini/taipo-frontend)
+  * 📱 Mobile repository: [jfcorsini/taipo-mobile](https://github.com/jfcorsini/taipo-mobile)
 
-## Requirements
+## Development
 
-* AWS CLI already configured with Administrator permission
-* [NodeJS 8.10+ installed](https://nodejs.org/en/download/releases/)
-* [Docker installed](https://www.docker.com/community-edition)
+The following sections will cover how to develop / maintain this application. More details should be added soon.
 
-## Access Patterns
+### Access Patterns
 
 The following list describes all the access patterns that this application allows:
 
@@ -19,8 +20,9 @@ The following list describes all the access patterns that this application allow
 3) Add a message to a chat
 4) List all messages of a chat.
 5) Create / update a user details, e.g. last login time.
+6) A user can create a chat with another user
 
-## DynamoDB Tables
+### DynamoDB Tables
 
 As the core of this application, there are two DynamoDB tables: users and chats. This could of course be done in a single one, but I prefered
 to separate the concerns at this level. Following DynamoDB Advanced Patterns, the design of the tables were done thinking about our access
@@ -29,10 +31,11 @@ patterns.
 The chats table will have the partition key being the chat identifier and the sort key will be different according to the need,
 as shown below:
 
-| PartitionKey | SortKey                         | Description                     |
-|--------------|---------------------------------|---------------------------------|
-| <chatId>     | config                          | Provides details about the chat |
-| <chatId>     | message_<timestamp>_<messageId> | Details about the message       |
+| PartitionKey | SortKey                         | Description                               |
+|--------------|---------------------------------|-------------------------------------------|
+| <chatId>     | config                          | Provides details about the chat           |
+| <chatId>     | message_<timestamp>_<messageId> | Details about the message                 |
+| <chatId>     | member_<username>               | Contain data about the members of a group |
 
 Meanwhile, the users table will have the partition key being the username of a user and sort key also being different according
 to the need, as shown below:
@@ -43,7 +46,3 @@ to the need, as shown below:
 
 Both tables will have a Global Secondary Index with the sortKey column being the primary key to allow extra queries. If needed,
 these and more indices will be described here.
-
-## Ideas to implement:
-
-* Always improve development flow.
