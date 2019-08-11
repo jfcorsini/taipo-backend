@@ -1,0 +1,8 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "GetItem",
+    "key" : {
+      "username" : { "S" : "${ctx.args.input.username}" },
+      "sortKey" : { "S" : "config" }
+    }
+}

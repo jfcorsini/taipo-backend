@@ -84,7 +84,7 @@ type UserItem {
   email: String
 }
 
-# User entry when sort key equals 'setting'
+# User entry when sort key equals 'config'
 type UserSetting {
   username: ID!
   sortKey: String!
@@ -95,6 +95,10 @@ type UserSetting {
 input PutUserInput {
   username: String!
   email: String!
+}
+
+input GetUserInput {
+  username: String!
 }
 
 input SearchUsersInput {
@@ -111,6 +115,7 @@ input SearchUsersInput {
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
   listChats(input: ListChatsInput): [ChatGroupConfig]
+  getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]
 }
 
