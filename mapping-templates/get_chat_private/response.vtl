@@ -1,6 +1,6 @@
 #set($response = {})
 
-#foreach($chat in $context.result.data.dev-language-app-chats )
+#foreach($result in $context.result.data.${chatsTableName} )
   #if($chat)
   	$util.toJson($chat);
     #set($response = {})

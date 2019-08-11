@@ -31,16 +31,22 @@ type ChatMember {
   createdAt: String!
 }
 
-# Chat entry when sort key equals 'config_group'
-type ChatGroupConfig {
+interface ChatConfig {
+  chatId: ID!
+  sortKey: String!
+  createdAt: String!
+}
+
+# Chat entry when sort key equals 'config'
+type ChatGroupConfig implements ChatConfig {
   chatId: ID!
   sortKey: String!
   chatName: String!
   createdAt: String!
 }
 
-# Chat entry when sort key equals 'config_private'
-type ChatPrivateConfig {
+# Chat entry when sort key equals 'config'
+type ChatPrivateConfig implements ChatConfig {
   chatId: ID!
   sortKey: String!
   createdAt: String!
@@ -52,7 +58,7 @@ input ListMessagesInput {
   nextToken: String
 }
 
-input ListChatsInput {
+input ListSelfChatMembersInput {
   count: Int
   nextToken: String
 }
@@ -74,6 +80,10 @@ input CreateChatGroupWithMembersInput {
 
 input GetChatPrivateInput {
   username: String!
+}
+
+input GetChatsInput {
+  chatIds: [ID]!
 }
 
 ####################################
@@ -118,8 +128,9 @@ input SearchUsersInput {
 # Define the queries
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
-  listChats(input: ListChatsInput): [ChatGroupConfig]
+  listSelfChatMembers(input: ListSelfChatMembersInput): [ChatMember]
   getChatPrivate(input: GetChatPrivateInput): ChatPrivateConfig
+  getChats(input: GetChatsInput): [ChatConfig]
   getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]
 }

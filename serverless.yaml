@@ -58,9 +58,14 @@ custom:
         response: "create_chat/response.vtl"
       - dataSource: chatsSource
         type: Query
-        field: listChats # from the query in schema.graphql
-        request: "list_chats/request.vtl"
-        response: "list_chats/response.vtl"
+        field: listSelfChatMembers # from the query in schema.graphql
+        request: "list_self_chat_members/request.vtl"
+        response: "list_self_chat_members/response.vtl"
+      - dataSource: chatsSource
+        type: Query
+        field: getChats # from the query in schema.graphql
+        request: "get_chats/request.vtl"
+        response: "get_chats/response.vtl"
       - dataSource: usersSource
         type: Mutation
         field: putUser # from the mutation in schema.graphql

@@ -12,7 +12,7 @@
     "${chatsTableName}": [
       {
         "chatId": $util.dynamodb.toStringJson($chatId),
-        "sortKey": $util.dynamodb.toStringJson("config_private"),
+        "sortKey": $util.dynamodb.toStringJson("config"),
         "createdAt": $util.dynamodb.toStringJson($timestamp)
       },
       {

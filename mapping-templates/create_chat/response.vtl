@@ -1,6 +1,6 @@
 #foreach($result in $context.result.data.${chatsTableName} )
   #foreach($item in $result.entrySet())
-      #if($item.key == "sortKey" && $item.value == "config_private")
+      #if($item.key == "sortKey" && $item.value == "config")
         $util.toJson($result);
       #end
   #end
