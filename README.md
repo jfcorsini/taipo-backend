@@ -31,11 +31,12 @@ patterns.
 The chats table will have the partition key being the chat identifier and the sort key will be different according to the need,
 as shown below:
 
-| PartitionKey | SortKey                         | Description                               |
-|--------------|---------------------------------|-------------------------------------------|
-| <chatId>     | config                          | Provides details about the chat           |
-| <chatId>     | message_<timestamp>_<messageId> | Details about the message                 |
-| <chatId>     | member_<username>               | Contain data about the members of a group |
+| PartitionKey                | SortKey                         | Description                               |
+|-----------------------------|---------------------------------|-------------------------------------------|
+| <usernameOne>_<usernameTwo> | config_private                  | Provides details about a private chat     |
+| <chatId>                    | config_group                    | Provides details about the chat group     |
+| <chatId>                    | message_<timestamp>_<messageId> | Details about the message                 |
+| <chatId>                    | member_<username>               | Contain data about the members of a group |
 
 Meanwhile, the users table will have the partition key being the username of a user and sort key also being different according
 to the need, as shown below:

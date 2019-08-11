@@ -11,7 +11,7 @@
     "${chatsTableName}": [
       {
         "chatId": $util.dynamodb.toStringJson($chatId),
-        "sortKey": $util.dynamodb.toStringJson("config"),
+        "sortKey": $util.dynamodb.toStringJson("config_group"),
         "chatName": $util.dynamodb.toStringJson($chatName),
         "createdAt": $util.dynamodb.toStringJson($timestamp)
       }
@@ -19,6 +19,7 @@
         ,{
           "chatId": $util.dynamodb.toStringJson($chatId),
           "sortKey": $util.dynamodb.toStringJson("member$delimiter$username"),
+          "username": $util.dynamodb.toStringJson($username),
           "chatName": $util.dynamodb.toStringJson($chatName),
           "createdAt": $util.dynamodb.toStringJson($timestamp)
         }

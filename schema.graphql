@@ -31,11 +31,18 @@ type ChatMember {
   createdAt: String!
 }
 
-# Chat entry when sort key equals 'config'
-type ChatGroup {
+# Chat entry when sort key equals 'config_group'
+type ChatGroupConfig {
   chatId: ID!
   sortKey: String!
   chatName: String!
+  createdAt: String!
+}
+
+# Chat entry when sort key equals 'config_private'
+type ChatPrivateConfig {
+  chatId: ID!
+  sortKey: String!
   createdAt: String!
 }
 
@@ -56,8 +63,8 @@ input CreateMessageInput {
   username: String!
 }
 
-input CreateChatInput {
-  chatName: String!
+input CreateChatPrivateInput {
+  username: String!
 }
 
 input CreateChatGroupWithMembersInput {
@@ -103,15 +110,15 @@ input SearchUsersInput {
 # Define the queries
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
-  listChats(input: ListChatsInput): [ChatGroup]
+  listChats(input: ListChatsInput): [ChatGroupConfig]
   searchUsers(input: SearchUsersInput): [UserSetting]
 }
 
 # Define the mutations
 type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
-  createChat(input: CreateChatInput): ChatGroup
-  createChatGroupWithMembers(input: CreateChatGroupWithMembersInput): ChatGroup
+  createChat(input: CreateChatPrivateInput): ChatPrivateConfig
+  createChatGroupWithMembers(input: CreateChatGroupWithMembersInput): ChatGroupConfig
   putUser(input: PutUserInput): UserSetting
 }
 

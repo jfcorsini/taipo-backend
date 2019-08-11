@@ -1,1 +1,7 @@
-$util.toJson($context.result)
+#foreach($result in $context.result.data.${chatsTableName} )
+  #foreach($item in $result.entrySet())
+      #if($item.key == "sortKey" && $item.value == "config_private")
+        $util.toJson($result);
+      #end
+  #end
+#end

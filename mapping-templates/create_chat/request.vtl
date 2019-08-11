@@ -1,16 +1,33 @@
 {
-  #set($chatId = $util.autoId())
-  #set($chatName = $ctx.args.input.chatName)
+  #set ($delimiter = "_")
+  #set($identityUsername = $ctx.identity.username)
+  #set($username = $ctx.args.input.username)
+  #set($chatId = "$identityUsername$delimiter$username")
+  
   #set($timestamp = $util.time.nowISO8601())
 
-  "version" : "2017-02-28",
-  "operation" : "PutItem",
-  "key": {
-    "chatId": $util.dynamodb.toStringJson($chatId),
-    "sortKey": $util.dynamodb.toStringJson("config"),
-  },
-  "attributeValues": {
-    "chatName": $util.dynamodb.toStringJson($chatName),
-    "createdAt": $util.dynamodb.toStringJson($timestamp)
+  "version" : "2018-05-29",
+  "operation" : "BatchPutItem",
+  "tables": {
+    "${chatsTableName}": [
+      {
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson("config_private"),
+        "createdAt": $util.dynamodb.toStringJson($timestamp)
+      },
+      {
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson("member$delimiter$username"),
+        "username": $util.dynamodb.toStringJson($username),
+        "createdAt": $util.dynamodb.toStringJson($timestamp)
+      },
+      {
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson("member$delimiter$identityUsername"),
+        "username": $util.dynamodb.toStringJson($identityUsername),
+        "createdAt": $util.dynamodb.toStringJson($timestamp)
+      }
+    ]
+  }
   }
 }
