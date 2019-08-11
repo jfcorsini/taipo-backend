@@ -68,9 +68,9 @@ custom:
         response: "put_user/response.vtl"
       - dataSource: chatsSource
         type: Mutation
-        field: createChatWithMembers # from the mutation in schema.graphql
-        request: "create_chat_with_members/request.vtl"
-        response: "create_chat_with_members/response.vtl"
+        field: createChatGroupWithMembers # from the mutation in schema.graphql
+        request: "create_chat_group_with_members/request.vtl"
+        response: "create_chat_group_with_members/response.vtl"
       - dataSource: usersSource
         type: Query
         field: searchUsers # from the query in schema.graphql

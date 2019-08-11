@@ -60,7 +60,7 @@ input CreateChatInput {
   chatName: String!
 }
 
-input CreateChatWithMembersInput {
+input CreateChatGroupWithMembersInput {
   chatName: String!
   usernames: [String]!
 }
@@ -111,7 +111,7 @@ type Query {
 type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
   createChat(input: CreateChatInput): ChatGroup
-  createChatWithMembers(input: CreateChatWithMembersInput): ChatGroup
+  createChatGroupWithMembers(input: CreateChatGroupWithMembersInput): ChatGroup
   putUser(input: PutUserInput): UserSetting
 }
 
