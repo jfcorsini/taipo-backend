@@ -1,0 +1,29 @@
+{
+  #set ($delimiter = "_")
+  #set($chatId = $util.autoId())
+  #set($timestamp = $util.time.nowISO8601())
+  #set($chatName = $ctx.args.input.chatName)
+  #set($usernames = $ctx.args.input.usernames)
+
+  "version" : "2018-05-29",
+  "operation" : "BatchPutItem",
+  "tables": {
+    "${chatsTableName}": [
+      {
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson("config"),
+        "chatName": $util.dynamodb.toStringJson($chatName),
+        "createdAt": $util.dynamodb.toStringJson($timestamp)
+      }
+      #foreach( $username in $usernames )
+        ,{
+          "chatId": $util.dynamodb.toStringJson($chatId),
+          "sortKey": $util.dynamodb.toStringJson("member$delimiter$username"),
+          "chatName": $util.dynamodb.toStringJson($chatName),
+          "createdAt": $util.dynamodb.toStringJson($timestamp)
+        }
+      #end
+    ]
+  }
+  }
+}

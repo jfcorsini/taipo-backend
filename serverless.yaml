@@ -66,6 +66,11 @@ custom:
         field: putUser # from the mutation in schema.graphql
         request: "put_user/request.vtl"
         response: "put_user/response.vtl"
+      - dataSource: chatsSource
+        type: Mutation
+        field: createChatWithMembers # from the mutation in schema.graphql
+        request: "create_chat_with_members/request.vtl"
+        response: "create_chat_with_members/response.vtl"
       - dataSource: usersSource
         type: Query
         field: searchUsers # from the query in schema.graphql

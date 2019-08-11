@@ -10,6 +10,7 @@ type ChatItem {
   messageId: String
   username: String
   chatName: String
+  createdAt: String
 }
 
 # Chat entry when sort key starts with 'message'
@@ -19,6 +20,15 @@ type ChatMessage {
   message: String!
   messageId: String!
   username: String!
+  createdAt: String!
+}
+
+# Chat entry when sort key starts with 'member'
+type ChatMember {
+  chatId: ID!
+  sortKey: String! #member_<username>
+  username: String!
+  createdAt: String!
 }
 
 # Chat entry when sort key equals 'config'
@@ -26,6 +36,7 @@ type ChatGroup {
   chatId: ID!
   sortKey: String!
   chatName: String!
+  createdAt: String!
 }
 
 input ListMessagesInput {
@@ -47,6 +58,11 @@ input CreateMessageInput {
 
 input CreateChatInput {
   chatName: String!
+}
+
+input CreateChatWithMembersInput {
+  chatName: String!
+  usernames: [String]!
 }
 
 ####################################
@@ -95,6 +111,7 @@ type Query {
 type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
   createChat(input: CreateChatInput): ChatGroup
+  createChatWithMembers(input: CreateChatWithMembersInput): ChatGroup
   putUser(input: PutUserInput): UserSetting
 }
 
