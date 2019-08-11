@@ -81,6 +81,11 @@ custom:
         field: getUser # from the query in schema.graphql
         request: "get_user/request.vtl"
         response: "get_user/response.vtl"
+      - dataSource: chatsSource
+        type: Query
+        field: getChatPrivate # from the query in schema.graphql
+        request: "get_chat_private/request.vtl"
+        response: "get_chat_private/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
       usersTableName: "${self:custom.usersTableName}"

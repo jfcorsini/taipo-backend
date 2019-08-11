@@ -1,0 +1,10 @@
+#set($response = {})
+
+#foreach($chat in $context.result.data.dev-language-app-chats )
+  #if($chat)
+  	$util.toJson($chat);
+    #set($response = {})
+  #end
+#end
+
+$util.toJson(null);

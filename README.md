@@ -15,12 +15,12 @@ The following sections will cover how to develop / maintain this application. Mo
 
 The following list describes all the access patterns that this application allows:
 
-1) Create a chat
-2) Return a list of chats
+1) Create a chat between two users.
+2) Create a group chat with multiple users.
+2) Return a list of chats that logged user can access.
 3) Add a message to a chat
-4) List all messages of a chat.
+4) List all messages of a chat with pagination.
 5) Create / update a user details, e.g. last login time.
-6) A user can create a chat with another user
 
 ### DynamoDB Tables
 

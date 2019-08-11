@@ -72,6 +72,10 @@ input CreateChatGroupWithMembersInput {
   usernames: [String]!
 }
 
+input GetChatPrivateInput {
+  username: String!
+}
+
 ####################################
 # User definitions
 ####################################
@@ -115,6 +119,7 @@ input SearchUsersInput {
 type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
   listChats(input: ListChatsInput): [ChatGroupConfig]
+  getChatPrivate(input: GetChatPrivateInput): ChatPrivateConfig
   getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]
 }

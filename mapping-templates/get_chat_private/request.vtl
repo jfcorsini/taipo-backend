@@ -1,0 +1,23 @@
+{
+  #set ($delimiter = "_")
+  #set($identityUsername = $ctx.identity.username)
+  #set($username = $ctx.args.input.username)
+  #set($chatIdOne = "$identityUsername$delimiter$username")
+  #set($chatIdTwo = "$username$delimiter$identityUsername")
+
+  #set($ids = [])
+  #foreach($id in [$chatIdOne, $chatIdTwo])
+    #set($map = {})
+    $util.qr($map.put("chatId", $util.dynamodb.toString($id)))
+    $util.qr($map.put("sortKey", $util.dynamodb.toString("config_private")))
+    $util.qr($ids.add($map))
+  #end
+
+  "version" : "2018-05-29",
+  "operation" : "BatchGetItem",
+  "tables": {
+    "${chatsTableName}": {
+      "keys": $util.toJson($ids)
+    }
+  }
+}
