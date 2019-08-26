@@ -14,8 +14,7 @@
         "chatId": $util.dynamodb.toStringJson($chatId),
         "sortKey": $util.dynamodb.toStringJson("config"),
         "chatName": $util.dynamodb.toStringJson($chatName),
-        "createdAt": $util.dynamodb.toStringJson($timestamp),
-        "private": $util.dynamodb.toBooleanJson(false)
+        "createdAt": $util.dynamodb.toStringJson($timestamp)
       }
       ,{
         "chatId": $util.dynamodb.toStringJson($chatId),

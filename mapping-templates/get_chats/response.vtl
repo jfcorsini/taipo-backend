@@ -1,1 +1,8 @@
-$util.toJson($context.result.data.${chatsTableName});
+#foreach ($result in $context.result.data.${chatsTableName})
+  #if( $result.private )
+  #set( $ignore = $result.put("__typename", "ChatPrivateConfig"))
+  #else
+  #set( $ignore = $result.put("__typename", "ChatGroupConfig"))
+  #end
+#end
+$util.toJson($context.result.data.${chatsTableName})

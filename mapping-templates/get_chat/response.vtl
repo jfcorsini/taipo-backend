@@ -1,0 +1,6 @@
+#if( $context.result.private )
+  #set( $ignore = $context.result.put("__typename", "ChatPrivateConfig"))
+#else
+  #set( $ignore = $context.result.put("__typename", "ChatGroupConfig"))
+#end
+$util.toJson($context.result)

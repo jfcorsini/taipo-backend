@@ -31,29 +31,29 @@ type ChatMember {
   createdAt: String!
 }
 
-interface ChatConfig {
+interface IChatConfig {
+  chatId: ID!
+  sortKey: String!
+  createdAt: String!
+}
+
+# Chat entry when sort key equals 'config'
+type ChatGroupConfig implements IChatConfig {
+  chatId: ID!
+  sortKey: String!
+  chatName: String!
+  createdAt: String!
+}
+
+# Chat entry when sort key equals 'config'
+type ChatPrivateConfig implements IChatConfig {
   chatId: ID!
   sortKey: String!
   createdAt: String!
   private: Boolean!
 }
 
-# Chat entry when sort key equals 'config'
-type ChatGroupConfig implements ChatConfig {
-  chatId: ID!
-  sortKey: String!
-  chatName: String!
-  createdAt: String!
-  private: Boolean! # False
-}
-
-# Chat entry when sort key equals 'config'
-type ChatPrivateConfig implements ChatConfig {
-  chatId: ID!
-  sortKey: String!
-  createdAt: String!
-  private: Boolean! # True
-}
+union ChatConfig = ChatPrivateConfig | ChatGroupConfig
 
 input ListMessagesInput {
   chatId: String!
@@ -83,6 +83,10 @@ input CreateChatGroupWithMembersInput {
 
 input GetChatPrivateInput {
   username: String!
+}
+
+input GetChatInput {
+  chatId: String!
 }
 
 input GetChatsInput {
@@ -133,6 +137,7 @@ type Query {
   listMessages(input: ListMessagesInput): [ChatMessage]
   listSelfChatMembers(input: ListSelfChatMembersInput): [ChatMember]
   getChatPrivate(input: GetChatPrivateInput): ChatPrivateConfig
+  getChat(input: GetChatInput): ChatConfig
   getChats(input: GetChatsInput): [ChatConfig]
   getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]
