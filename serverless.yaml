@@ -17,7 +17,7 @@ custom:
   chatsTableName: ${self:custom.stage}-language-app-chats
   usersTableName: ${self:custom.stage}-language-app-users
   appSync:
-    name: LanguageAppPrototypeAppSync    
+    name: LanguageAppPrototypeAppSync
     authenticationType: AMAZON_COGNITO_USER_POOLS
     userPoolConfig:
       awsRegion: ${self:provider.region}
@@ -53,9 +53,9 @@ custom:
         response: "get_created_message/response.vtl"
       - dataSource: chatsSource
         type: Mutation
-        field: createChat # from the mutation in schema.graphql
-        request: "create_chat/request.vtl"
-        response: "create_chat/response.vtl"
+        field: createChatPrivate # from the mutation in schema.graphql
+        request: "create_chat_private/request.vtl"
+        response: "create_chat_private/response.vtl"
       - dataSource: chatsSource
         type: Query
         field: listSelfChatMembers # from the query in schema.graphql

@@ -4,6 +4,7 @@
   #set($timestamp = $util.time.nowISO8601())
   #set($chatName = $ctx.args.input.chatName)
   #set($usernames = $ctx.args.input.usernames)
+  #set($identityUsername = $ctx.identity.username)
 
   "version" : "2018-05-29",
   "operation" : "BatchPutItem",
@@ -12,6 +13,14 @@
       {
         "chatId": $util.dynamodb.toStringJson($chatId),
         "sortKey": $util.dynamodb.toStringJson("config"),
+        "chatName": $util.dynamodb.toStringJson($chatName),
+        "createdAt": $util.dynamodb.toStringJson($timestamp),
+        "private": $util.dynamodb.toBooleanJson(false)
+      }
+      ,{
+        "chatId": $util.dynamodb.toStringJson($chatId),
+        "sortKey": $util.dynamodb.toStringJson("member$delimiter$identityUsername"),
+        "username": $util.dynamodb.toStringJson($identityUsername),
         "chatName": $util.dynamodb.toStringJson($chatName),
         "createdAt": $util.dynamodb.toStringJson($timestamp)
       }

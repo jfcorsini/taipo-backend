@@ -35,6 +35,7 @@ interface ChatConfig {
   chatId: ID!
   sortKey: String!
   createdAt: String!
+  private: Boolean!
 }
 
 # Chat entry when sort key equals 'config'
@@ -43,6 +44,7 @@ type ChatGroupConfig implements ChatConfig {
   sortKey: String!
   chatName: String!
   createdAt: String!
+  private: Boolean! # False
 }
 
 # Chat entry when sort key equals 'config'
@@ -50,6 +52,7 @@ type ChatPrivateConfig implements ChatConfig {
   chatId: ID!
   sortKey: String!
   createdAt: String!
+  private: Boolean! # True
 }
 
 input ListMessagesInput {
@@ -138,7 +141,7 @@ type Query {
 # Define the mutations
 type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
-  createChat(input: CreateChatPrivateInput): ChatPrivateConfig
+  createChatPrivate(input: CreateChatPrivateInput): ChatPrivateConfig
   createChatGroupWithMembers(input: CreateChatGroupWithMembersInput): ChatGroupConfig
   putUser(input: PutUserInput): UserSetting
 }
