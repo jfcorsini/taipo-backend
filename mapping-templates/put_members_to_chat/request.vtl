@@ -1,0 +1,23 @@
+
+#set ($delimiter = "_")
+#set($chatId = $ctx.args.input.chatId)
+#set($timestamp = $util.time.nowISO8601())
+#set($usernames = $ctx.args.input.usernames)
+
+#set($members = [])
+#foreach($username in ${usernames})
+    #set($pkey = {})
+    $util.qr($pkey.put("chatId", $chatId))
+    $util.qr($pkey.put("sortKey", "member$delimiter$username"))
+    $util.qr($pkey.put("createdAt", $timestamp))
+    $util.qr($pkey.put("username", $username))
+    $util.qr($members.add($util.dynamodb.toMapValues($pkey)))
+#end
+
+{
+  "version" : "2018-05-29",
+  "operation" : "BatchPutItem",
+  "tables": {
+    "${chatsTableName}": $utils.toJson($members) 
+  }
+}

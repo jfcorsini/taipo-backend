@@ -81,6 +81,11 @@ input CreateChatGroupWithMembersInput {
   usernames: [String]!
 }
 
+input PutMembersToChatInput {
+  chatId: ID!
+  usernames: [String]!
+}
+
 input GetChatPrivateInput {
   username: String!
 }
@@ -155,6 +160,7 @@ type Mutation {
   createMessage(input: CreateMessageInput): ChatMessage
   createChatPrivate(input: CreateChatPrivateInput): ChatPrivateConfig
   createChatGroupWithMembers(input: CreateChatGroupWithMembersInput): ChatGroupConfig
+  putMembersToChat(input: PutMembersToChatInput): [ChatMember]
   putUser(input: PutUserInput): UserSetting
 }
 

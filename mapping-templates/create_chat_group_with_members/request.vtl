@@ -20,7 +20,6 @@
         "chatId": $util.dynamodb.toStringJson($chatId),
         "sortKey": $util.dynamodb.toStringJson("member$delimiter$identityUsername"),
         "username": $util.dynamodb.toStringJson($identityUsername),
-        "chatName": $util.dynamodb.toStringJson($chatName),
         "createdAt": $util.dynamodb.toStringJson($timestamp)
       }
       #foreach( $username in $usernames )
@@ -28,7 +27,6 @@
           "chatId": $util.dynamodb.toStringJson($chatId),
           "sortKey": $util.dynamodb.toStringJson("member$delimiter$username"),
           "username": $util.dynamodb.toStringJson($username),
-          "chatName": $util.dynamodb.toStringJson($chatName),
           "createdAt": $util.dynamodb.toStringJson($timestamp)
         }
       #end
