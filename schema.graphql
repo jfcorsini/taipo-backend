@@ -93,6 +93,12 @@ input GetChatsInput {
   chatIds: [ID]!
 }
 
+input GetChatMembersInput {
+  chatId: String!
+  count: Int
+  nextToken: String
+}
+
 ####################################
 # User definitions
 ####################################
@@ -138,6 +144,7 @@ type Query {
   listSelfChatMembers(input: ListSelfChatMembersInput): [ChatMember]
   getChatPrivate(input: GetChatPrivateInput): ChatPrivateConfig
   getChat(input: GetChatInput): ChatConfig
+  getChatMembers(input: GetChatMembersInput): [ChatMember]
   getChats(input: GetChatsInput): [ChatConfig]
   getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]

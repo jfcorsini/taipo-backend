@@ -1,0 +1,18 @@
+{
+
+  "version" : "2017-02-28",
+  "operation" : "Query",
+  "query" : {
+    "expression": "chatId = :chatId and begins_with(sortKey, :sortKey)",
+    "expressionValues" : {
+      ":chatId" : { "S" : "$ctx.args.input.chatId" },
+      ":sortKey" : { "S" : "member_" }
+    }
+  }
+  #if( ${ctx.args.input.count} )
+      ,"limit": ${ctx.args.input.count}
+  #end
+  #if( ${ctx.args.input.nextToken} )
+      ,"nextToken": "${ctx.args.input.nextToken}"
+  #end
+}
