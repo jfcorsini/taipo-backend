@@ -1,10 +1,1 @@
-#set($response = {})
-
-#foreach($result in $context.result.data["${chatsTableName}"] )
-  #if($chat)
-  	$util.toJson($chat)
-    #set($response = {})
-  #end
-#end
-
-$util.toJson(null)
+$util.toJson($context.result.data["${chatsTableName}"][0])
