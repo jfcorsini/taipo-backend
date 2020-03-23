@@ -9,8 +9,28 @@ provider:
   region: eu-west-1
   profile: LanguageAppAdmin
 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:BatchGetItem
+      Resource: arn:aws:dynamodb:*:*:table/*-language-app-*
+
 plugins:
   - serverless-appsync-plugin
+
+functions:
+  lambdaGraphQl:
+    handler: handler.app
+    environment:
+      CHATS_TABLE: ${opt:stage, self:provider.stage}-language-app-chats
+      USERS_TABLE: ${opt:stage, self:provider.stage}-language-app-users
 
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -33,6 +53,11 @@ custom:
         name: usersSource
         config:
           tableName: ${self:custom.usersTableName}
+      - type: AWS_LAMBDA
+        name: lambdaSource
+        description: 'Lambda DataSource'
+        config:
+          functionName: lambdaGraphQl
       - type: NONE
         name: noneSource
     mappingTemplates:
@@ -51,7 +76,7 @@ custom:
         field: createdMessage # from the subscription in schema.graphql
         request: "get_created_message/request.vtl"
         response: "get_created_message/response.vtl"
-      - dataSource: chatsSource
+      - dataSource: lambdaSource
         type: Mutation
         field: createChatPrivate # from the mutation in schema.graphql
         request: "create_chat_private/request.vtl"

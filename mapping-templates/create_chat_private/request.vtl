@@ -1,33 +1,10 @@
 {
-  #set ($delimiter = "_")
-  #set($identityUsername = $ctx.identity.username)
-  #set($username = $ctx.args.input.username)
-  #set($chatId = "$identityUsername$delimiter$username")
-  
-  #set($timestamp = $util.time.nowISO8601())
-
-  "version" : "2018-05-29",
-  "operation" : "BatchPutItem",
-  "tables": {
-    "${chatsTableName}": [
-      {
-        "chatId": $util.dynamodb.toStringJson($chatId),
-        "sortKey": $util.dynamodb.toStringJson("config"),
-        "createdAt": $util.dynamodb.toStringJson($timestamp),
-        "private": $util.dynamodb.toBooleanJson(true)
-      },
-      {
-        "chatId": $util.dynamodb.toStringJson($chatId),
-        "sortKey": $util.dynamodb.toStringJson("member$delimiter$username"),
-        "username": $util.dynamodb.toStringJson($username),
-        "createdAt": $util.dynamodb.toStringJson($timestamp)
-      },
-      {
-        "chatId": $util.dynamodb.toStringJson($chatId),
-        "sortKey": $util.dynamodb.toStringJson("member$delimiter$identityUsername"),
-        "username": $util.dynamodb.toStringJson($identityUsername),
-        "createdAt": $util.dynamodb.toStringJson($timestamp)
-      }
-    ]
+  "version": "2017-02-28",
+  "operation": "Invoke",
+  "payload": {
+    "field": "createPrivateChat",
+    "identityUsername": "$ctx.identity.username",
+    "createdAt": "$util.time.nowISO8601()",
+    "arguments": $utils.toJson($context.arguments)
   }
 }
