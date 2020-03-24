@@ -1,12 +1,18 @@
 const AWS = require('aws-sdk');
 const uuid = require('uuid');
 const { isEmpty } = require('ramda');
+const getPrivateChat = require('./getPrivateChat');
 
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
-const handler = (event, context) => {
+const handler = async (event, context) => {
   const { createdAt, identityUsername, arguments: { input } } = event;
   const { username } = input;
+
+  const privateChat = await getPrivateChat(event, context);
+  if (privateChat) {
+    return privateChat;
+  }
 
   const sortedUsernames = [username, identityUsername].sort().join('_');
   const chatId = uuid.v4();
