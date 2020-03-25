@@ -51,6 +51,7 @@ type ChatPrivateConfig implements IChatConfig {
   sortKey: String!
   createdAt: String!
   private: Boolean!
+  usernames: [String]!
 }
 
 union ChatConfig = ChatPrivateConfig | ChatGroupConfig

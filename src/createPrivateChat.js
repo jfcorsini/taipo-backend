@@ -14,7 +14,8 @@ const handler = async (event, context) => {
     return privateChat;
   }
 
-  const sortedUsernames = [username, identityUsername].sort().join('_');
+  const usernames = [username, identityUsername];
+  const sortedUsernames = usernames.sort().join('_');
   const chatId = uuid.v4();
 
   privateChat = {
@@ -22,6 +23,7 @@ const handler = async (event, context) => {
     sortKey: `config_${sortedUsernames}`,
     createdAt,
     private: true,
+    usernames,
   };
 
   const params = {
