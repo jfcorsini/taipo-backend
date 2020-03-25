@@ -9,7 +9,7 @@ const handler = async (event, context) => {
   const { createdAt, identityUsername, arguments: { input } } = event;
   const { username } = input;
 
-  const privateChat = await getPrivateChat(event, context);
+  let privateChat = await getPrivateChat(event, context);
   if (privateChat) {
     return privateChat;
   }
@@ -17,7 +17,7 @@ const handler = async (event, context) => {
   const sortedUsernames = [username, identityUsername].sort().join('_');
   const chatId = uuid.v4();
 
-  const privateChat = {
+  privateChat = {
     chatId,
     sortKey: `config_${sortedUsernames}`,
     createdAt,
