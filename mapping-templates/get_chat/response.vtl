@@ -1,6 +1,13 @@
-#if( $context.result.private )
-  #set( $ignore = $context.result.put("__typename", "ChatPrivateConfig"))
-#else
-  #set( $ignore = $context.result.put("__typename", "ChatGroupConfig"))
+#set($items = $context.result.items)
+
+#if (!$items.isEmpty())
+  #set($config = $items[0])
+
+  #if( $config && $config.private )
+    #set( $ignore = $config.put("__typename", "ChatPrivateConfig"))
+  #elseif( $config )
+    #set( $ignore = $config.put("__typename", "ChatGroupConfig"))
+  #end
 #end
-$util.toJson($context.result)
+
+$util.toJson($config)

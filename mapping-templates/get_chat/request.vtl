@@ -1,8 +1,11 @@
 {
     "version" : "2017-02-28",
-    "operation" : "GetItem",
-    "key" : {
-      "chatId" : { "S" : "${ctx.args.input.chatId}" },
-      "sortKey" : { "S" : "config" }
+    "operation" : "Query",
+    "query" : {
+      "expression": "chatId = :chatId and begins_with(sortKey, :sortKey)",
+      "expressionValues" : {
+        ":chatId" : { "S" : "$ctx.args.input.chatId" },
+        ":sortKey" : { "S" : "config" }
+      }
     }
 }
