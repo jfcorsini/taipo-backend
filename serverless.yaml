@@ -121,7 +121,7 @@ custom:
         field: getChatPrivate # from the query in schema.graphql
         request: "get_chat_private/request.vtl"
         response: "get_chat_private/response.vtl"
-      - dataSource: lambdaSource
+      - dataSource: chatsSource
         type: Query
         field: getChat # from the query in schema.graphql
         request: "get_chat/request.vtl"
