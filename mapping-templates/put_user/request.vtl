@@ -1,6 +1,7 @@
 {
   #set($email = $ctx.args.input.email)
   #set($username = $ctx.args.input.username)
+  #set($identityId = $ctx.args.input.identityId)
   #set($timestamp = $util.time.nowISO8601())
 
   "version" : "2017-02-28",
@@ -11,6 +12,7 @@
   },
   "attributeValues": {
     "email": $util.dynamodb.toStringJson($email),
+    "identityId": $util.dynamodb.toStringJson($identityId),
     "lastLogin": $util.dynamodb.toStringJson($timestamp)
   }
 }

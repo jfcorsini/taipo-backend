@@ -123,10 +123,12 @@ type UserSetting {
   sortKey: String!
   lastLogin: String!
   email: String!
+  identityId: String!
 }
 
 input PutUserInput {
   username: String!
+  identityId: String!
   email: String!
 }
 
