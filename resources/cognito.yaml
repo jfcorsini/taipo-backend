@@ -91,21 +91,25 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - "s3:GetObject"
-                Resource:
-                  - "arn:aws:s3:::taipo-app/public/users/*"
-                  - "arn:aws:s3:::taipo-app/public/chats/*"
-              - Effect: "Allow"
-                Action:
                   - "s3:PutObject"
                   - "s3:DeleteObject"
-                # Allow users to PUT / DELETE their own images.
-                # Ugly template because of serverless framework
                 Resource:
+                  - "arn:aws:s3:::taipo-app/public/*"
                   - 'Fn::Join':
                     - ''
-                    - - 'arn:aws:s3:::taipo-app/public/users/'
+                    - - 'arn:aws:s3:::taipo-app/protected/'
                       - '${cognito-identity.amazonaws.com:sub'
                       - '}/*'
+                  - 'Fn::Join':
+                    - ''
+                    - - 'arn:aws:s3:::taipo-app/private/'
+                      - '${cognito-identity.amazonaws.com:sub'
+                      - '}/*'
+              - Effect: "Allow"
+                Action:
+                  - "s3:GetObject"
+                Resource:
+                  - "arn:aws:s3:::taipo-app/protected/*"
               - Effect: "Allow"
                 Action: "s3:ListBucket"
                 Resource: "arn:aws:s3:::taipo-app"
@@ -114,6 +118,18 @@ Resources:
                     "s3:prefix":
                       - "public/"
                       - "public/*"
+                      - "protected/"
+                      - "protected/*"
+                      - 'Fn::Join':
+                        - ''
+                        - - 'arn:aws:s3:::taipo-app/private/'
+                          - '${cognito-identity.amazonaws.com:sub'
+                          - '}/'
+                      - 'Fn::Join':
+                        - ''
+                        - - 'arn:aws:s3:::taipo-app/private/'
+                          - '${cognito-identity.amazonaws.com:sub'
+                          - '}/*'
   
   # Assigns the roles to the Identity Pool
   IdentityPoolRoleMapping:
