@@ -12,8 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.643.0",
-    "serverless": "^1.46.1",
-    "serverless-appsync-plugin": "^1.1.2"
+    "serverless": "^1.67.0",
+    "serverless-appsync-plugin": "^1.2.0"
   },
   "dependencies": {
     "ramda": "^0.27.0",
