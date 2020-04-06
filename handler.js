@@ -1,4 +1,4 @@
-const { startsWith, path } = require('ramda');
+const { startsWith, pathOr } = require('ramda');
 const createPrivateChat = require('./src/createPrivateChat');
 const getPrivateChat = require('./src/getPrivateChat');
 const { translate } = require('./src/translator');
@@ -22,7 +22,7 @@ const translator = (event, context) => {
   console.log("Received event {}", JSON.stringify(event, 3));
   const translateMessages = event.Records
     .filter((record) => {
-      const sortKey = path(['dynamodb', 'NewImage', 'sortKey', 'S'], record);
+      const sortKey = pathOr('', ['dynamodb', 'NewImage', 'sortKey', 'S'], record);
 
       return record.eventName === 'INSERT' && startsWith('message_', sortKey);
     })
