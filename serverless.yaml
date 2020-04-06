@@ -21,6 +21,10 @@ provider:
         - dynamodb:BatchWriteItem
         - dynamodb:BatchGetItem
       Resource: arn:aws:dynamodb:*:*:table/*-language-app-*
+    - Effect: Allow
+      Action:
+        - translate:TranslateText
+      Resource: "*"
 
 plugins:
   - serverless-appsync-plugin
@@ -31,6 +35,21 @@ functions:
     environment:
       CHATS_TABLE: ${opt:stage, self:provider.stage}-language-app-chats
       USERS_TABLE: ${opt:stage, self:provider.stage}-language-app-users
+  messagesTranslator:
+    timeout: 15
+    handler: handler.translator
+    environment:
+      CHATS_TABLE: ${opt:stage, self:provider.stage}-language-app-chats
+      USERS_TABLE: ${opt:stage, self:provider.stage}-language-app-users
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 10
+          startingPosition: TRIM_HORIZON
+          arn:
+            Fn::GetAtt:
+              - chatTable
+              - StreamArn
 
 custom:
   stage: ${opt:stage, self:provider.stage}
