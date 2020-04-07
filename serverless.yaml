@@ -31,13 +31,13 @@ plugins:
 
 functions:
   lambdaGraphQl:
-    handler: handler.app
+    handler: handler.lambdaResolver
     environment:
       CHATS_TABLE: ${opt:stage, self:provider.stage}-language-app-chats
       USERS_TABLE: ${opt:stage, self:provider.stage}-language-app-users
-  messagesTranslator:
+  streamProcessor:
     timeout: 15
-    handler: handler.translator
+    handler: handler.streamProcessor
     environment:
       CHATS_TABLE: ${opt:stage, self:provider.stage}-language-app-chats
       USERS_TABLE: ${opt:stage, self:provider.stage}-language-app-users
