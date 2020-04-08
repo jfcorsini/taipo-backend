@@ -1,5 +1,6 @@
-const { startsWith, pathOr } = require('ramda');
+const { startsWith, pathOr, uniq, compose, reject, isNil } = require('ramda');
 const updateTranslation = require('./lib/updateTranslation');
+const updateLastMessageAt = require('./lib/updateLastMessageAt');
 
 module.exports = async (event, context) => {
   console.log("Received event {}", JSON.stringify(event, 3));
@@ -21,4 +22,11 @@ module.exports = async (event, context) => {
   }).filter(item => item.message);
   
   await updateTranslation(messagesToTranslate);
+
+  const chatsWithNewMessage = compose(
+    reject(isNil),
+    uniq,
+  )(newMessages.map(record => pathOr(null, ['dynamodb', 'NewImage', 'chatId', 'S'], record)));
+  
+  await updateLastMessageAt(chatsWithNewMessage);
 };
