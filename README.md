@@ -33,7 +33,6 @@ as shown below:
 
 | PartitionKey                | SortKey                         | Description                               |
 |-----------------------------|---------------------------------|-------------------------------------------|
-| <usernameOne>_<usernameTwo> | config                          | Provides details about a private chat     |
 | <chatId>                    | config                          | Provides details about the chat group     |
 | <chatId>                    | message_<timestamp>_<messageId> | Details about the message                 |
 | <chatId>                    | member_<username>               | Contain data about the members of a group |
