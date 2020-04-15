@@ -16,7 +16,9 @@
     "serverless-appsync-plugin": "^1.2.0"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ramda": "^0.27.0",
+    "twilio": "^3.42.1",
     "uuid": "^7.0.2"
   }
 }

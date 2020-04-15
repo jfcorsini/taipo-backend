@@ -150,6 +150,11 @@ custom:
         field: getChatMembers # from the query in schema.graphql
         request: "get_chat_members/request.vtl"
         response: "get_chat_members/response.vtl"
+      - dataSource: lambdaSource
+        type: Query
+        field: getTwilioToken # from the query in schema.graphql
+        request: "get_twilio_token/request.vtl"
+        response: "get_twilio_token/response.vtl"
     substitutions:
       chatsTableName: "${self:custom.chatsTableName}"
       usersTableName: "${self:custom.usersTableName}"
