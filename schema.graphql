@@ -142,6 +142,10 @@ input SearchUsersInput {
   nextToken: String
 }
 
+input GetTwilioTokenInput {
+  roomName: String!
+}
+
 type Token {
   token: String!
   username: String!
@@ -161,7 +165,7 @@ type Query {
   getChats(input: GetChatsInput): [ChatConfig]
   getUser(input: GetUserInput): UserSetting
   searchUsers(input: SearchUsersInput): [UserSetting]
-  getTwilioToken: Token
+  getTwilioToken(input: GetTwilioTokenInput): Token
 }
 
 # Define the mutations
