@@ -11,7 +11,7 @@
   "author": "Joao Fernando Corsini",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk": "^2.643.0",
+    "aws-sdk": "^2.814.0",
     "serverless": "^1.67.0",
     "serverless-appsync-plugin": "^1.2.0"
   },
