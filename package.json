@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.643.0",
-    "serverless": "^1.67.0",
+    "serverless": "^3.25.1",
     "serverless-appsync-plugin": "^1.2.0"
   },
   "dependencies": {
